@@ -3,8 +3,9 @@ const cors = require('cors');
 const app = express();
 const port = 8000;
 
-// require config (database connection)
+// require config
 require('./config/mongoose.config');
+require('dotenv').config();
 
 app.use(cors({credentials: true}));
 app.use(express.json());

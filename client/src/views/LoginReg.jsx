@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
 const LoginReg = () => {
@@ -32,8 +32,14 @@ const LoginReg = () => {
                 const errorResponse = err.response.data.errors;
                 const errorArr = [];
 
-                for (const key of Object.keys(errorResponse)) {
-                    errorArr.push(errorResponse[key].message)
+                if (errorResponse){
+                    for (const key of Object.keys(errorResponse)) {
+                        errorArr.push(errorResponse[key].message)
+                    }
+                }
+
+                if(err.response.data.code === 11000){
+                    errorArr.push("Email and/or Username is already in use")
                 }
 
                 setRegErrors(errorArr)
@@ -49,6 +55,7 @@ const LoginReg = () => {
         })
             .then(res => {
                 console.log(res.data)
+                localStorage.setItem('token', res.data.user)
             })
             .catch(err => {
                 console.log("ERROR", err)
