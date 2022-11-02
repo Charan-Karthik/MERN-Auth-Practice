@@ -12,6 +12,7 @@ const LoginReg = () => {
     const [logPassword, setLogPassword] = useState("")
 
     const [regErrors, setRegErrors] = useState([])
+    const [loginErrors, setLoginErrors] = useState([]);
 
     const registerUser = e => {
         e.preventDefault()
@@ -41,6 +42,18 @@ const LoginReg = () => {
 
     const loginUser = e => {
         e.preventDefault()
+
+        axios.post('http://localhost:8000/api/users/login', {
+            email: logEmail,
+            password: logPassword
+        })
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log("ERROR", err)
+                setLoginErrors("Incorrect email and/or password")
+            })
     }
 
     return (
@@ -68,6 +81,9 @@ const LoginReg = () => {
                 {/* Login */}
                 <div>
                     <h1>Log In</h1>
+
+                    {loginErrors ? <p className='text-danger'>{loginErrors}</p> : <></>}
+
                     <form className='d-flex flex-column' onSubmit={loginUser}>
                         {/* add input type email after you check server side validations */}
                         Email: <input value={logEmail} onChange={e => setLogEmail(e.target.value)} />
