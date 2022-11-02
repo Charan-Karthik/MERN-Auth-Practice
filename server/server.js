@@ -6,11 +6,11 @@ const port = 8000;
 // require config (database connection)
 require('./config/mongoose.config');
 
-app.use(cors());
+app.use(cors({credentials: true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // require routes
-// require('./routes/{FILENAME}')(app);
+require('./routes/user.routes')(app);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`) );

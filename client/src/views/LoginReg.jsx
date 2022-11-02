@@ -17,10 +17,10 @@ const LoginReg = () => {
         e.preventDefault()
 
         axios.post('http://localhost:8000/api/users/register', {
-            username, 
+            username: username, 
             email: regEmail, 
             password: regPassword, 
-            confirmPassword 
+            confirmPassword: confirmPassword 
         })
             .then(res => {
                 console.log("SUCCESS", res.data)

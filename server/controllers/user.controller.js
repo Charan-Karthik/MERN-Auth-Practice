@@ -1,7 +1,9 @@
 const User = require('../models/user.model')
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 
 module.exports.register = (req, res) => {
+    // console.log(req.body)
+
     User.create(req.body)
         .then(user => {
             console.log(user)
