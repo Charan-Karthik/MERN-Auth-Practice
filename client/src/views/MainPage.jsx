@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import jwt from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
 
 const MainPage = () => {
+
+    const nav = useNavigate();
 
     const [loggedInUser, setLoggedInUser] = useState(null)
     // const [logOutAction, setLogOutAction] = useState(false)
@@ -29,7 +32,7 @@ const MainPage = () => {
         <div>
             <h1>Testing the Main Page</h1>
 
-            { loggedInUser ? <h5>logged in user's username: {loggedInUser}</h5> : <p>please log in/sign up</p>}
+            { loggedInUser ? <h5>logged in user's username: {loggedInUser}</h5> : <p onClick={() => nav('/loginreg')}>please log in/sign up</p>}
 
             <p>Testing the log out feature: <span onClick={() => logout()}>Log Out</span></p>
         </div>

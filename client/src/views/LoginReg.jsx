@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const LoginReg = () => {
+
+    const nav = useNavigate();
 
     const [username, setUsername] = useState("")
     const [regEmail, setRegEmail] = useState("")
@@ -18,13 +21,14 @@ const LoginReg = () => {
         e.preventDefault()
 
         axios.post('http://localhost:8000/api/users/register', {
-            username: username, 
-            email: regEmail, 
-            password: regPassword, 
-            confirmPassword: confirmPassword 
+            username: username,
+            email: regEmail,
+            password: regPassword,
+            confirmPassword: confirmPassword
         })
             .then(res => {
                 console.log("SUCCESS", res.data)
+                nav('/')
             })
             .catch(err => {
                 console.log("ERROR", err)
@@ -32,13 +36,13 @@ const LoginReg = () => {
                 const errorResponse = err.response.data.errors;
                 const errorArr = [];
 
-                if (errorResponse){
+                if (errorResponse) {
                     for (const key of Object.keys(errorResponse)) {
                         errorArr.push(errorResponse[key].message)
                     }
                 }
 
-                if(err.response.data.code === 11000){
+                if (err.response.data.code === 11000) {
                     errorArr.push("Email and/or Username is already in use")
                 }
 
@@ -56,6 +60,7 @@ const LoginReg = () => {
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem('token', res.data.user)
+                // nav('/')
             })
             .catch(err => {
                 console.log("ERROR", err)
@@ -94,7 +99,7 @@ const LoginReg = () => {
                     <form className='d-flex flex-column' onSubmit={loginUser}>
                         {/* add input type email after you check server side validations */}
                         Email: <input value={logEmail} onChange={e => setLogEmail(e.target.value)} />
-                        
+
                         Password: <input type='password' value={logPassword} onChange={e => setLogPassword(e.target.value)} />
                         <br />
                         <input type="submit" value="Log In" />
