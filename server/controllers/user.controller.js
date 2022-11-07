@@ -7,8 +7,11 @@ module.exports.register = (req, res) => {
 
     User.create(req.body)
         .then(user => {
-            console.log(user)
-            return res.json(user)
+            // console.log("THIS IS THE USER", user)
+            // return res.json(user)
+            const token = jwt.sign({ username: user.username }, process.env.JWT_PRIVATE_KEY, { expiresIn: '1d' })
+
+            return res.json({ user: token })
         })
         .catch(err => res.status(400).json(err))
 }

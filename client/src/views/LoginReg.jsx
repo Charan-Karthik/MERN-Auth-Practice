@@ -28,6 +28,7 @@ const LoginReg = () => {
         })
             .then(res => {
                 console.log("SUCCESS", res.data)
+                localStorage.setItem('token', res.data.user)
                 nav('/')
             })
             .catch(err => {
@@ -60,7 +61,7 @@ const LoginReg = () => {
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem('token', res.data.user)
-                // nav('/')
+                nav('/')
             })
             .catch(err => {
                 console.log("ERROR", err)
